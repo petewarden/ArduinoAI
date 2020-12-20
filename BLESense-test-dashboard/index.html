@@ -453,7 +453,7 @@ function init3D(){
   var container = document.getElementById( '3d' );
   var loader = new THREE.GLTFLoader();
   scene.background = new THREE.Color( 0x111111 );
-  renderer.setSize( 177, 177 );
+  renderer.setSize( 480, 640 );
   renderer.setPixelRatio( 4 );
   container.appendChild( renderer.domElement );
   loader.load( 'models/nano33ble.glb',
