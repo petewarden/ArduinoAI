@@ -42,11 +42,6 @@
     color: white;
   }
 
-  .hidden-square {
-    width: 0px;  height: 0px;
-    position: relative;
-  }
-
   .square {
     width: 480px;  height: 640px;
     position: relative;
@@ -56,24 +51,6 @@
     height: 15px;
     display: inline;
     font-size: 15px;
-  }
-
-  .digit {
-    font-size: 30px;
-    color: #888888;
-    float: right;
-  }
-
-  .short {width: 192px;  height: 96px;}
-  .double {width: 0px;  height: 0px;}
-  .graph{width: 0px;  height: 0px;}
-  .doublegraph{width: 0px;  height: 0px;}
-  .shortgraph{width: 0px;  height: 0px;}
-
-  #color-picker-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   </style>
 </head>
@@ -86,13 +63,9 @@
       <div class="label" id="bluetooth">Click button to connect to the board</div>
     </div>
 
-    <div class="square widget" id="3d">
-      <div class="label">&#128230;3D</div>
-    </div>
-
-    <div class="hidden-square widget">
-      <div class="label">&#128250;Spectrogram</div>
-      <canvas id="spectrogram" class="graph"></canvas>
+    <div class="square widget">
+      <div class="label">Acceleration</div>
+      <canvas id="acceleration"></canvas>
     </div>
   </div>
 </body>
@@ -240,27 +213,11 @@ async function connect() {
   <script>
 
 // Microphone spectrum analyser
-function initSpectrum(){
-  var canvas = document.getElementById('mic');
-  const micctx = canvas.getContext('2d');
-  const bucketLabels = Object.keys(BLEsense['microphone'].data);
-  micctx.fillStyle = "#111111";//"rgba("+R+","+G+","+B+")";
-  micctx.fillRect(0, 0, canvas.width, canvas.height);
-  const thickness = canvas.width / bucketLabels.length;
-  canvas = document.getElementById('micbg');
-  const bgctx = canvas.getContext('2d');
-  bgctx.fillStyle = "#111111";
-  bgctx.fillRect(0, 0, 256, 118);
-  var r = 255; g = 0; b = 0;
-
-  for (j=0;j<256;j+=2){
-    for (i=0;i<32;i++){
-      g++;
-      if (j>64) {r-=2;}
-      bgctx.fillStyle = "rgba("+r+","+g+","+b+")";
-      bgctx.fillRect(i*thickness, j, thickness-1, 1);
-    }
-  }
+function initAccelerationGraph() {
+  var canvas = document.getElementById('acceleration');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 // return last item of array
@@ -293,6 +250,9 @@ Array.prototype.latest = function(){return this[this.length - 1];};
     } else {skip_frame=false;}
     requestAnimationFrame(draw);
   }
+  
+  initAccelerationGraph();
+    
   requestAnimationFrame(draw);
   </script>
   </html>
