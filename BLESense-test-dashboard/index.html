@@ -230,14 +230,16 @@ function updateAccelerationGraph() {
   ctx.fillStyle = "#111111";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
+  var scale = canvas.height / 2;
+  
   ctx.fillStyle = "#ff0000";
-  ctx.fillRect(100, 0, 100, canvas.height * ax);
+  ctx.fillRect(100, 320, 100, (scale * ax));
 
   ctx.fillStyle = "#00ff00";
-  ctx.fillRect(300, 0, 100, canvas.height * ay);
+  ctx.fillRect(300, 320, 100, (scale * ay));
 
   ctx.fillStyle = "#0000ff";
-  ctx.fillRect(500, 0, 100, canvas.height * az);
+  ctx.fillRect(500, 320, 100, (scale * az));
 }
 
 // return last item of array
