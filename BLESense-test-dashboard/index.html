@@ -219,6 +219,26 @@ function initAccelerationGraph() {
   ctx.fillStyle = "#111111";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
+    
+function updateAccelerationGraph() {
+  var ax = BLEsense['accelerometer'].data.Ax.latest();
+  var ay = BLEsense['accelerometer'].data.Ay.latest();
+  var az = BLEsense['accelerometer'].data.Az.latest();
+
+  var canvas = document.getElementById('acceleration');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  ctx.fillStyle = "#ff0000";
+  ctx.fillRect(100, 0, 100, canvas.height * ax);
+
+  ctx.fillStyle = "#00ff00";
+  ctx.fillRect(300, 0, 100, canvas.height * ay);
+
+  ctx.fillStyle = "#0000ff";
+  ctx.fillRect(500, 0, 100, canvas.height * az);
+}
 
 // return last item of array
 Array.prototype.latest = function(){return this[this.length - 1];};
@@ -245,6 +265,8 @@ Array.prototype.latest = function(){return this[this.length - 1];};
       var ay = BLEsense['accelerometer'].data.Ay.latest();
       var az = BLEsense['accelerometer'].data.Az.latest();
       msg("ax=" + ax + ", ay=" + ay + ", az=" + az);
+      
+      updateAccelerationGraph();
 
       skip_frame = true; // render alternate frames = 30fps
     } else {skip_frame=false;}
