@@ -540,16 +540,17 @@ function spectrogram(sensor){
       var ax = BLEsense['accelerometer'].data.Ax.latest();
       var ay = BLEsense['accelerometer'].data.Ay.latest();
       var az = BLEsense['accelerometer'].data.Az.latest();
-      //msg("ax=" + ax + ", ay=" + ay + ", az=" + az);
+      msg("ax=" + ax + ", ay=" + ay + ", az=" + az);
       
 //      updateViz('colorimeter', [colorBars]);
 //      updateViz('microphone', [spectrumAnalyser]);
 //      updateViz('gyroscope', [graph]);
-      updateViz('accelerometer', [graph,update3d]);
+//      updateViz('accelerometer', [graph,update3d]);
 //      updateViz('proximity', [digit]);
 //      updateViz('temperature', [graph,digit]);
 //      updateViz('humidity', [graph,digit]);
 //      updateViz('pressure', [graph,digit]);
+
       //bytes();
 
       skip_frame = true; // render alternate frames = 30fps
