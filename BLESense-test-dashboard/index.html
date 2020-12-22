@@ -594,14 +594,14 @@ function spectrogram(sensor){
       }
     }
     if (skip_frame == false){ // TODO update with fuction to iterate object with viz function as a property
-      updateViz('colorimeter', [colorBars]);
-      updateViz('microphone', [spectrumAnalyser]);
-      updateViz('gyroscope', [graph]);
+//      updateViz('colorimeter', [colorBars]);
+//      updateViz('microphone', [spectrumAnalyser]);
+//      updateViz('gyroscope', [graph]);
       updateViz('accelerometer', [graph,update3d]);
-      updateViz('proximity', [digit]);
-      updateViz('temperature', [graph,digit]);
-      updateViz('humidity', [graph,digit]);
-      updateViz('pressure', [graph,digit]);
+//      updateViz('proximity', [digit]);
+//      updateViz('temperature', [graph,digit]);
+//      updateViz('humidity', [graph,digit]);
+//      updateViz('pressure', [graph,digit]);
       //bytes();
 
       skip_frame = true; // render alternate frames = 30fps
@@ -609,12 +609,12 @@ function spectrogram(sensor){
     requestAnimationFrame(draw);
   }
 
-  initGraph('accelerometer');
-  initGraph('gyroscope');
-  initGraph('temperature');
-  initGraph('humidity');
-  initGraph('pressure');
-  initSpectrum();
+//  initGraph('accelerometer');
+//  initGraph('gyroscope');
+//  initGraph('temperature');
+//  initGraph('humidity');
+//  initGraph('pressure');
+//  initSpectrum();
   init3D();
   requestAnimationFrame(draw);
   </script>
