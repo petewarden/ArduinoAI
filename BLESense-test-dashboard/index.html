@@ -223,10 +223,6 @@ async function connect() {
         clearInterval(BLEsense[sensor].polling);
       }
     }
-    // clear color picker write
-    const colorPickerElement = document.getElementById("color-picker-container");
-    colorPickerElement.removeChild(colorPickerElement.firstChild);
-
     msg('Device ' + device.name + ' is disconnected.');
   }
 
