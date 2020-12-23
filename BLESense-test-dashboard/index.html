@@ -385,6 +385,7 @@ function updatePositionGraph() {
   
   var dataLength = posData.x.length;
   var pointCount = Math.min(dataLength, 20);
+  
   var xPoints = posData.x.slice(dataLength - pointCount, dataLength); 
   var xMin = Math.min(...xPoints);
   var xMax = Math.max(...xPoints);
@@ -472,14 +473,56 @@ function initOrientationGraph() {
 }
     
 function updateOrientationGraph() {
-  var x = BLEsense['orientation'].data.x.latest();
-  var y = BLEsense['orientation'].data.y.latest();
-  var z = BLEsense['orientation'].data.z.latest();
-
   var canvas = document.getElementById('orientation');
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = "#111111";
   ctx.fillRect(0, 0, canvas.width, canvas.height);  
+  
+  var orientationData = BLEsense['orientation'].data;
+  
+  var dataLength = orientationData.x.length;
+  var pointCount = Math.min(dataLength, 20);
+
+  var xPoints = orientationData.x.slice(dataLength - pointCount, dataLength); 
+  var xMin = Math.min(...xPoints);
+  var xMax = Math.max(...xPoints);
+  var xRange = Math.max((xMax - xMin), 100.0);
+
+  var yPoints = orientationData.y.slice(dataLength - pointCount, dataLength); 
+  var yMin = Math.min(...yPoints);
+  var yMax = Math.max(...yPoints);
+  var yRange = Math.max((yMax - yMin), 100.0);
+
+  var zPoints = orientationData.z.slice(dataLength - pointCount, dataLength); 
+  var zMin = Math.min(...zPoints);
+  var zMax = Math.max(...zPoints);
+  var zRange = Math.max((zMax - zMin), 100.0);
+
+  var canvasWidth = canvas.width;
+  var canvasHeight = canvas.height;
+  
+  ctx.strokeStyle = "#ffffff";
+  ctx.beginPath();
+  for (var i = 0; i < dataLength; ++i) {
+    var x = xPoints[i];
+    var y = yPoints[i];
+    var z = zPoints[i];
+    
+    var xCanvas = ((y - yMin) / yRange) * canvasWidth;
+    var yCanvas = (0.0 + ((z - zMin) / zRange)) * canvasHeight;
+    
+    if (i === 0) {
+      ctx.moveTo(xCanvas, yCanvas);
+    } else if (i == (dataLength - 1)) {
+      ctx.lineTo(xCanvas+5, yCanvas+5);
+      ctx.lineTo(xCanvas-5, yCanvas-5);
+      ctx.moveTo(xCanvas+5, yCanvas-5);
+      ctx.moveTo(xCanvas-5, yCanvas+5);      
+    } else {
+      ctx.lineTo(xCanvas, yCanvas);
+    }
+  }
+  ctx.stroke();
 }
    
 // return last item of array
@@ -508,10 +551,10 @@ Array.prototype.latest = function(){return this[this.length - 1];};
       var z = BLEsense['gyroscope'].data.z.latest();
       msg("x=" + x + ", y=" + y + ", z=" + z);
       
-      updateAccelerationGraph();
-      updateVelocityGraph();
-      updateGravityGraph();
-      updatePositionGraph();
+//      updateAccelerationGraph();
+//      updateVelocityGraph();
+//      updateGravityGraph();
+//      updatePositionGraph();
       updateGyroscopeGraph();
       updateOrientationGraph();
       
