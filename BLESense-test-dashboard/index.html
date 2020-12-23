@@ -346,7 +346,7 @@ function initPositionGraph() {
 }
     
 function updatePositionGraph() {
-  var canvas = document.getElementById('acceleration');
+  var canvas = document.getElementById('position');
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = "#111111";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -358,17 +358,17 @@ function updatePositionGraph() {
   var xPoints = posData.x.slice(dataLength - pointCount, dataLength); 
   var xMin = Math.min(...xPoints);
   var xMax = Math.max(...xPoints);
-  var xRange = Math.min((xMax - xMin), 1.0);
+  var xRange = Math.min((xMax - xMin), 100.0);
 
   var yPoints = posData.y.slice(dataLength - pointCount, dataLength); 
   var yMin = Math.min(...yPoints);
   var yMax = Math.max(...yPoints);
-  var yRange = Math.min((yMax - yMin), 1.0);
+  var yRange = Math.min((yMax - yMin), 100.0);
 
   var zPoints = posData.z.slice(dataLength - pointCount, dataLength); 
   var zMin = Math.min(...zPoints);
   var zMax = Math.max(...zPoints);
-  var zRange = Math.min((zMax - zMin), 1.0);
+  var zRange = Math.min((zMax - zMin), 100.0);
 
   var canvasWidth = canvas.width;
   var canvasHeight = canvas.height;
