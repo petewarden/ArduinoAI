@@ -549,8 +549,8 @@ function updateOrientationGraph() {
   ctx.beginPath();
   ctx.lineTo(halfWidth, halfHeight);
   
-  var gxCanvas = halfWidth - (gz * halfWidth);
-  var gyCanvas = halfHeight - (gy * halfHeight);
+  var gxCanvas = halfWidth - (gy * halfWidth);
+  var gyCanvas = halfHeight - (gz * halfHeight);
   ctx.lineTo(gxCanvas, gyCanvas);
   ctx.stroke();  
 }
