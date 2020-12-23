@@ -508,8 +508,8 @@ function updateOrientationGraph() {
     var y = yPoints[i];
     var z = zPoints[i];
     
-    var xCanvas = (0.0 + ((z - zMin) / zRange)) * canvasHeight;
-    var yCanvas = ((y - yMin) / yRange) * canvasWidth;
+    var xCanvas = (1.0 - ((z - zMin) / zRange)) * canvasHeight;
+    var yCanvas = (1.0 - ((y - yMin) / yRange)) * canvasWidth;
     
     if (i === 0) {
       ctx.moveTo(xCanvas, yCanvas);
