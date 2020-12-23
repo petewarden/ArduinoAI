@@ -475,7 +475,7 @@ function initOrientationGraph() {
 function mean(sequence) {
   var total = 0;
   for (i in sequence) {
-    total += i; 
+    total += sequence[i]; 
   }
   return total / sequence.length;
 }
