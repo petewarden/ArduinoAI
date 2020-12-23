@@ -472,6 +472,14 @@ function initOrientationGraph() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
     
+function mean(sequence) {
+  var total = 0;
+  for (i in sequence) {
+    total += i; 
+  }
+  return total / sequence.length;
+}
+    
 function updateOrientationGraph() {
   var canvas = document.getElementById('orientation');
   const ctx = canvas.getContext('2d');
@@ -486,20 +494,25 @@ function updateOrientationGraph() {
   var xPoints = orientationData.x.slice(dataLength - pointCount, dataLength); 
   var xMin = Math.min(...xPoints);
   var xMax = Math.max(...xPoints);
-  var xRange = 1000.0;
+  var xMean = mean(xPoints);
+  var xRange = 500.0;
 
   var yPoints = orientationData.y.slice(dataLength - pointCount, dataLength); 
   var yMin = Math.min(...yPoints);
   var yMax = Math.max(...yPoints);
-  var yRange = 1000.0;
+  var yMean = mean(yPoints);
+  var yRange = 500.0;
 
   var zPoints = orientationData.z.slice(dataLength - pointCount, dataLength); 
   var zMin = Math.min(...zPoints);
   var zMax = Math.max(...zPoints);
-  var zRange = 1000.0;
+  var zMean = mean(zPoints);
+  var zRange = 500.0;
 
   var canvasWidth = canvas.width;
   var canvasHeight = canvas.height;
+  var halfHeight = canvasHeight / 2;
+  var halfWidth = canvasWidth / 2;
   
   ctx.strokeStyle = "#ffffff";
   ctx.beginPath();
@@ -508,8 +521,12 @@ function updateOrientationGraph() {
     var y = yPoints[i];
     var z = zPoints[i];
     
-    var xCanvas = (1.0 - ((z - zMin) / zRange)) * canvasHeight;
-    var yCanvas = (1.0 - ((y - yMin) / yRange)) * canvasWidth;
+    var nx = (x - xMean) / xRange;
+    var ny = (y - yMean) / yRange;
+    var nz = (z - zMean) / zRange;
+    
+    var xCanvas = halfWidth + ((1.0 - nz) * halfWidth);
+    var yCanvas = halfHeight + ((1.0 - ny) * halfHeight);
     
     if (i === 0) {
       ctx.moveTo(xCanvas, yCanvas);
