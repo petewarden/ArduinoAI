@@ -354,7 +354,7 @@ function updatePositionGraph() {
   var posData = BLEsense['position'].data;
   
   var dataLength = posData.x.length;
-  var pointCount = Math.min(dataLength, 100);
+  var pointCount = Math.min(dataLength, 20);
   var xPoints = posData.x.slice(dataLength - pointCount, dataLength); 
   var xMin = Math.min(...xPoints);
   var xMax = Math.max(...xPoints);
