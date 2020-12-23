@@ -152,6 +152,13 @@ var BLEsense =
     properties: ['BLENotify'],
     structure: ['Float32','Float32','Float32'],
     data: {'x':[],'y':[],'z':[]},
+  },
+  gyroscopeDrift:
+  {
+    uuid: '6fbe1da7-3009-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'x':[],'y':[],'z':[]},
   }
 }
 
@@ -428,10 +435,18 @@ function initGyroscopeGraph() {
 }
     
 function updateGyroscopeGraph() {
-  var x = BLEsense['gyroscope'].data.x.latest();
-  var y = BLEsense['gyroscope'].data.y.latest();
-  var z = BLEsense['gyroscope'].data.z.latest();
+  var rx = BLEsense['gyroscope'].data.x.latest();
+  var ry = BLEsense['gyroscope'].data.y.latest();
+  var rz = BLEsense['gyroscope'].data.z.latest();
 
+  var dx = BLEsense['gyroscopeDrift'].data.x.latest();
+  var dy = BLEsense['gyroscopeDrift'].data.y.latest();
+  var dz = BLEsense['gyroscopeDrift'].data.z.latest();
+
+  var x = rx - dx;
+  var y = ry - dy;
+  var z = rz - dz;
+  
   var canvas = document.getElementById('gyroscope');
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = "#111111";
