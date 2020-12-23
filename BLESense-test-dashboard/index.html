@@ -486,17 +486,17 @@ function updateOrientationGraph() {
   var xPoints = orientationData.x.slice(dataLength - pointCount, dataLength); 
   var xMin = Math.min(...xPoints);
   var xMax = Math.max(...xPoints);
-  var xRange = Math.max((xMax - xMin), 1000.0);
+  var xRange = 1000.0;
 
   var yPoints = orientationData.y.slice(dataLength - pointCount, dataLength); 
   var yMin = Math.min(...yPoints);
   var yMax = Math.max(...yPoints);
-  var yRange = Math.max((yMax - yMin), 1000.0);
+  var yRange = 1000.0;
 
   var zPoints = orientationData.z.slice(dataLength - pointCount, dataLength); 
   var zMin = Math.min(...zPoints);
   var zMax = Math.max(...zPoints);
-  var zRange = Math.max((zMax - zMin), 1000.0);
+  var zRange = 1000.0;
 
   var canvasWidth = canvas.width;
   var canvasHeight = canvas.height;
