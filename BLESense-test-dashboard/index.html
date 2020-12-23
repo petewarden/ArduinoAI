@@ -129,6 +129,20 @@ var BLEsense =
     properties: ['BLENotify'],
     structure: ['Float32','Float32','Float32'],
     data: {'x':[],'y':[],'z':[]},
+  },
+  gyroscope:
+  {
+    uuid: '6fbe1da7-3007-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'x':[],'y':[],'z':[]},
+  },
+  orientation:
+  {
+    uuid: '6fbe1da7-3008-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'x':[],'y':[],'z':[]},
   }
 }
 
@@ -418,9 +432,9 @@ Array.prototype.latest = function(){return this[this.length - 1];};
       }
     }
     if (skip_frame == false){ // TODO update with fuction to iterate object with viz function as a property
-      var x = BLEsense['position'].data.x.latest();
-      var y = BLEsense['position'].data.y.latest();
-      var z = BLEsense['position'].data.z.latest();
+      var x = BLEsense['gyroscope'].data.x.latest();
+      var y = BLEsense['gyroscope'].data.y.latest();
+      var z = BLEsense['gyroscope'].data.z.latest();
       msg("x=" + x + ", y=" + y + ", z=" + z);
       
       updateAccelerationGraph();
