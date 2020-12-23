@@ -540,6 +540,19 @@ function updateOrientationGraph() {
     }
   }
   ctx.stroke();
+  
+  var gx = BLEsense['gravity'].data.x.latest();
+  var gy = BLEsense['gravity'].data.y.latest();
+  var gz = BLEsense['gravity'].data.z.latest();
+  
+  ctx.strokeStyle = "#ff0000";
+  ctx.beginPath();
+  ctx.lineTo(halfWidth, halfHeight);
+  
+  var gxCanvas = halfWidth - (gz * halfWidth);
+  var gyCanvas = halfHeight - (gy * halfHeight);
+  ctx.lineTo(gxCanvas, gyCanvas);
+  ctx.stroke();  
 }
    
 // return last item of array
