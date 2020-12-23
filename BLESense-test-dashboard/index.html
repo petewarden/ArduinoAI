@@ -358,17 +358,17 @@ function updatePositionGraph() {
   var xPoints = posData.x.slice(dataLength - pointCount, dataLength); 
   var xMin = Math.min(...xPoints);
   var xMax = Math.max(...xPoints);
-  var xRange = Math.min((xMax - xMin), 100.0);
+  var xRange = Math.max((xMax - xMin), 100.0);
 
   var yPoints = posData.y.slice(dataLength - pointCount, dataLength); 
   var yMin = Math.min(...yPoints);
   var yMax = Math.max(...yPoints);
-  var yRange = Math.min((yMax - yMin), 100.0);
+  var yRange = Math.max((yMax - yMin), 100.0);
 
   var zPoints = posData.z.slice(dataLength - pointCount, dataLength); 
   var zMin = Math.min(...zPoints);
   var zMax = Math.max(...zPoints);
-  var zRange = Math.min((zMax - zMin), 100.0);
+  var zRange = Math.max((zMax - zMin), 100.0);
 
   var canvasWidth = canvas.width;
   var canvasHeight = canvas.height;
