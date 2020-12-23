@@ -525,8 +525,8 @@ function updateOrientationGraph() {
     var ny = (y - yMean) / yRange;
     var nz = (z - zMean) / zRange;
     
-    var xCanvas = halfWidth + ((1.0 - nz) * halfWidth);
-    var yCanvas = halfHeight + ((1.0 - ny) * halfHeight);
+    var xCanvas = halfWidth - (nz * halfWidth);
+    var yCanvas = halfHeight - (ny * halfHeight);
     
     if (i === 0) {
       ctx.moveTo(xCanvas, yCanvas);
