@@ -69,6 +69,16 @@
       <div class="label">Acceleration</div>
       <canvas id="acceleration" width="640px" height="640px" class="square"></canvas>
     </div>
+    
+    <div class="widget">
+      <div class="label">Velocity</div>
+      <canvas id="velocity" width="640px" height="640px" class="square"></canvas>
+    </div>
+
+    <div class="widget">
+      <div class="label">Gravity</div>
+      <canvas id="gravity" width="640px" height="640px" class="square"></canvas>
+    </div>
   </div>
 </body>
 <script type="text/javascript">
@@ -93,9 +103,23 @@ var BLEsense =
     structure: ['Float32','Float32','Float32'],
     data: {'Ax':[],'Ay':[],'Az':[]},
   },
+  velocity:
+  {
+    uuid: '6fbe1da7-3005-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'vx':[],'vy':[],'vz':[]},
+  },
   position:
   {
     uuid: '6fbe1da7-3004-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'x':[],'y':[],'z':[]},
+  },
+  gravity:
+  {
+    uuid: '6fbe1da7-3006-44de-92c4-bb6e04fb0212',
     properties: ['BLENotify'],
     structure: ['Float32','Float32','Float32'],
     data: {'x':[],'y':[],'z':[]},
@@ -221,7 +245,6 @@ async function connect() {
   </script>
   <script>
 
-// Microphone spectrum analyser
 function initAccelerationGraph() {
   var canvas = document.getElementById('acceleration');
   const ctx = canvas.getContext('2d');
@@ -251,6 +274,64 @@ function updateAccelerationGraph() {
   ctx.fillRect(500, 320, 100, (scale * az));
 }
 
+function initVelocityGraph() {
+  var canvas = document.getElementById('velocity');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function updateVelocityGraph() {
+  var ax = BLEsense['velocity'].data.vx.latest();
+  var ay = BLEsense['velocity'].data.vy.latest();
+  var az = BLEsense['velocity'].data.vz.latest();
+
+  var canvas = document.getElementById('velocity');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  var scale = canvas.height / 2;
+  
+  ctx.fillStyle = "#ff0000";
+  ctx.fillRect(100, 320, 100, (scale * ax));
+
+  ctx.fillStyle = "#00ff00";
+  ctx.fillRect(300, 320, 100, (scale * ay));
+
+  ctx.fillStyle = "#0000ff";
+  ctx.fillRect(500, 320, 100, (scale * az));
+}
+
+function initGravityGraph() {
+  var canvas = document.getElementById('gravity');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+    
+function updateGravityGraph() {
+  var ax = BLEsense['gravity'].data.x.latest();
+  var ay = BLEsense['gravity'].data.y.latest();
+  var az = BLEsense['gravity'].data.z.latest();
+
+  var canvas = document.getElementById('gravity');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  var scale = canvas.height / 2;
+  
+  ctx.fillStyle = "#ff0000";
+  ctx.fillRect(100, 320, 100, (scale * ax));
+
+  ctx.fillStyle = "#00ff00";
+  ctx.fillRect(300, 320, 100, (scale * ay));
+
+  ctx.fillStyle = "#0000ff";
+  ctx.fillRect(500, 320, 100, (scale * az));
+}
+    
 // return last item of array
 Array.prototype.latest = function(){return this[this.length - 1];};
 
@@ -278,6 +359,8 @@ Array.prototype.latest = function(){return this[this.length - 1];};
       msg("x=" + x + ", y=" + y + ", z=" + z);
       
       updateAccelerationGraph();
+      updateVelocityGraph();
+      updateGravityGraph();
 
       skip_frame = true; // render alternate frames = 30fps
     } else {skip_frame=false;}
@@ -285,6 +368,8 @@ Array.prototype.latest = function(){return this[this.length - 1];};
   }
   
   initAccelerationGraph();
+  initVelocityGraph();
+  initGravityGraph();
     
   requestAnimationFrame(draw);
   </script>
