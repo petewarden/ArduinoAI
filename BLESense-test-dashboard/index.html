@@ -69,6 +69,12 @@
       <div class="label">Acceleration</div>
       <canvas id="acceleration" width="640px" height="640px" class="square"></canvas>
     </div>
+
+    <div class="widget">
+      <div class="label">Position</div>
+      <canvas id="position" width="640px" height="640px" class="square"></canvas>
+    </div>
+
     
     <div class="widget">
       <div class="label">Velocity</div>
@@ -331,7 +337,61 @@ function updateGravityGraph() {
   ctx.fillStyle = "#0000ff";
   ctx.fillRect(500, 320, 100, (scale * az));
 }
+
+function initPositionGraph() {
+  var canvas = document.getElementById('position');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
     
+function updatePositionGraph() {
+  var canvas = document.getElementById('acceleration');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  var posData = BLEsense['position'].data;
+  
+  var dataLength = posData.x.length;
+  var pointCount = Math.min(dataLength, 100);
+  var xPoints = posData.x.slice(dataLength - pointCount, dataLength); 
+  var xMin = Math.min(...xPoints);
+  var xMax = Math.max(...xPoints);
+  var xRange = Math.min((xMax - xMin), 1.0);
+
+  var yPoints = posData.y.slice(dataLength - pointCount, dataLength); 
+  var yMin = Math.min(...yPoints);
+  var yMax = Math.max(...yPoints);
+  var yRange = Math.min((yMax - yMin), 1.0);
+
+  var zPoints = posData.z.slice(dataLength - pointCount, dataLength); 
+  var zMin = Math.min(...zPoints);
+  var zMax = Math.max(...zPoints);
+  var zRange = Math.min((zMax - zMin), 1.0);
+
+  var canvasWidth = canvas.width;
+  var canvasHeight = canvas.height;
+  
+  ctx.strokeStyle = "#ffffff";
+  ctx.beginPath();
+  for (var i = 0; i < dataLength; ++i) {
+    var x = xPoints[i];
+    var y = yPoints[i];
+    var z =zPoints[i];
+    
+    var xCanvas = ((y - yMin) / yRange) * canvasWidth;
+    var yCanvas = (1.0 - ((z - zMin) / zRange)) * canvasWidth;
+    
+    if (i === 0) {
+      ctx.moveTo(xCanvas, yCanvas);
+    } else {
+      ctx.lineTo(xCanvas, yCanvas);
+    }
+  }
+  ctx.stroke();
+}
+   
 // return last item of array
 Array.prototype.latest = function(){return this[this.length - 1];};
 
@@ -361,7 +421,8 @@ Array.prototype.latest = function(){return this[this.length - 1];};
       updateAccelerationGraph();
       updateVelocityGraph();
       updateGravityGraph();
-
+      updatePositionGraph();
+      
       skip_frame = true; // render alternate frames = 30fps
     } else {skip_frame=false;}
     requestAnimationFrame(draw);
@@ -370,6 +431,7 @@ Array.prototype.latest = function(){return this[this.length - 1];};
   initAccelerationGraph();
   initVelocityGraph();
   initGravityGraph();
+  initPositionGraph();
     
   requestAnimationFrame(draw);
   </script>
