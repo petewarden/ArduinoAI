@@ -381,7 +381,7 @@ function updatePositionGraph() {
     var z =zPoints[i];
     
     var xCanvas = ((y - yMin) / yRange) * canvasWidth;
-    var yCanvas = (1.0 - ((z - zMin) / zRange)) * canvasWidth;
+    var yCanvas = (0.0 + ((z - zMin) / zRange)) * canvasHeight;
     
     if (i === 0) {
       ctx.moveTo(xCanvas, yCanvas);
