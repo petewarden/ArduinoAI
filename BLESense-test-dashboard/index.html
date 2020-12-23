@@ -66,6 +66,16 @@
     </div>
 
     <div class="widget">
+      <div class="label">Gyroscope</div>
+      <canvas id="gyroscope" width="640px" height="640px" class="square"></canvas>
+    </div>
+
+    <div class="widget">
+      <div class="label">Orientation</div>
+      <canvas id="orientation" width="640px" height="640px" class="square"></canvas>
+    </div>
+    
+    <div class="widget">
       <div class="label">Acceleration</div>
       <canvas id="acceleration" width="640px" height="640px" class="square"></canvas>
     </div>
@@ -74,7 +84,6 @@
       <div class="label">Position</div>
       <canvas id="position" width="640px" height="640px" class="square"></canvas>
     </div>
-
     
     <div class="widget">
       <div class="label">Velocity</div>
@@ -410,6 +419,53 @@ function updatePositionGraph() {
   }
   ctx.stroke();
 }
+    
+function initGyroscopeGraph() {
+  var canvas = document.getElementById('gyroscope');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+    
+function updateGyroscopeGraph() {
+  var x = BLEsense['gyroscope'].data.x.latest();
+  var y = BLEsense['gyroscope'].data.y.latest();
+  var z = BLEsense['gyroscope'].data.z.latest();
+
+  var canvas = document.getElementById('gyroscope');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  var scale = canvas.height / 8;
+  
+  ctx.fillStyle = "#ff0000";
+  ctx.fillRect(100, 320, 100, (scale * x));
+
+  ctx.fillStyle = "#00ff00";
+  ctx.fillRect(300, 320, 100, (scale * y));
+
+  ctx.fillStyle = "#0000ff";
+  ctx.fillRect(500, 320, 100, (scale * z));
+}
+
+function initOrientationGraph() {
+  var canvas = document.getElementById('orientation');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+    
+function updateOrientationGraph() {
+  var x = BLEsense['orientation'].data.x.latest();
+  var y = BLEsense['orientation'].data.y.latest();
+  var z = BLEsense['orientation'].data.z.latest();
+
+  var canvas = document.getElementById('orientation');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);  
+}
    
 // return last item of array
 Array.prototype.latest = function(){return this[this.length - 1];};
@@ -441,6 +497,8 @@ Array.prototype.latest = function(){return this[this.length - 1];};
       updateVelocityGraph();
       updateGravityGraph();
       updatePositionGraph();
+      updateGyroscopeGraph();
+      updateOrientationGraph();
       
       skip_frame = true; // render alternate frames = 30fps
     } else {skip_frame=false;}
@@ -451,6 +509,8 @@ Array.prototype.latest = function(){return this[this.length - 1];};
   initVelocityGraph();
   initGravityGraph();
   initPositionGraph();
+  initGyroscopeGraph();
+  initOrientationGraph();
     
   requestAnimationFrame(draw);
   </script>
