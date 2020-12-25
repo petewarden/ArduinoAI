@@ -516,7 +516,7 @@ function updateOrientationGraph() {
     
   var gy = BLEsense['gravity'].data.y.latest();
   var gz = BLEsense['gravity'].data.z.latest();
-  var gmag = Math.sqrt((gx * gx) + (gy * gy));
+  var gmag = Math.max(Math.sqrt((gy * gy) + (gz * gz)), 0.0001);
   var ngy = gy / gmag;
   var ngz = gz / gmag;
   
