@@ -520,11 +520,11 @@ function updateOrientationGraph() {
   var ngy = gy / gmag;
   var ngz = gz / gmag;
   
-  var xaxisz = ngy;
-  var xaxisy = ngz;
+  var xaxisz = 1.0; //ngy;
+  var xaxisy = 0.0; //ngz;
 
-  var yaxisz = ngz;
-  var yaxisy = -ngy;
+  var yaxisz = 0.0; // ngz;
+  var yaxisy = 1.0; // -ngy;
   
   ctx.strokeStyle = "#ffffff";
   ctx.beginPath();
