@@ -513,6 +513,18 @@ function updateOrientationGraph() {
   var canvasHeight = canvas.height;
   var halfHeight = canvasHeight / 2;
   var halfWidth = canvasWidth / 2;
+    
+  var gy = BLEsense['gravity'].data.y.latest();
+  var gz = BLEsense['gravity'].data.z.latest();
+  var gmag = Math.sqrt((gx * gx) + (gy * gy));
+  var ngy = gy / gmag;
+  var ngz = gz / gmag;
+  
+  var xaxisz = ngy;
+  var xaxisy = ngz;
+
+  var yaxisz = ngz;
+  var xaxisy = -ngy;
   
   ctx.strokeStyle = "#ffffff";
   ctx.beginPath();
@@ -525,8 +537,11 @@ function updateOrientationGraph() {
     var ny = (y - yMean) / yRange;
     var nz = (z - zMean) / zRange;
     
-    var xCanvas = halfWidth - (nz * halfWidth);
-    var yCanvas = halfHeight - (ny * halfHeight);
+    var xaxis = (xaxisz * nz) + (xaxisy * ny);
+    var yaxis = (yaxisz * nz) + (yaxisy * ny);
+    
+    var xCanvas = halfWidth - (xaxis * halfWidth);
+    var yCanvas = halfHeight - (yaxis * halfHeight);
     
     if (i === 0) {
       ctx.moveTo(xCanvas, yCanvas);
@@ -540,10 +555,6 @@ function updateOrientationGraph() {
     }
   }
   ctx.stroke();
-  
-  var gx = BLEsense['gravity'].data.x.latest();
-  var gy = BLEsense['gravity'].data.y.latest();
-  var gz = BLEsense['gravity'].data.z.latest();
   
   ctx.strokeStyle = "#ff0000";
   ctx.beginPath();
