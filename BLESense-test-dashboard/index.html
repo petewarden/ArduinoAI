@@ -66,8 +66,8 @@
     </div>
 
     <div class="widget">
-      <div class="label">Gyroscope</div>
-      <canvas id="gyroscope" width="640px" height="640px" class="square"></canvas>
+      <div class="label">Stroke</div>
+      <canvas id="stroke" width="640px" height="640px" class="square"></canvas>
     </div>
 
     <div class="widget">
@@ -75,6 +75,11 @@
       <canvas id="orientation" width="640px" height="640px" class="square"></canvas>
     </div>
     
+    <div class="widget">
+      <div class="label">Gyroscope</div>
+      <canvas id="gyroscope" width="640px" height="640px" class="square"></canvas>
+    </div>
+
     <div class="widget">
       <div class="label">Acceleration</div>
       <canvas id="acceleration" width="640px" height="640px" class="square"></canvas>
@@ -159,6 +164,27 @@ var BLEsense =
     properties: ['BLENotify'],
     structure: ['Float32','Float32','Float32'],
     data: {'x':[],'y':[],'z':[]},
+  },
+  stroke:
+  {
+    uuid: '6fbe1da7-300a-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32'],
+    data: {'x':[],'y':[]},
+  },
+  strokeLength:
+  {
+    uuid: '6fbe1da7-300b-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Int32'],
+    data: {'x':[]},
+  },
+  strokeState:
+  {
+    uuid: '6fbe1da7-300c-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Int32'],
+    data: {'x':[]},
   }
 }
 
@@ -232,6 +258,7 @@ async function connect() {
     const typeMap = {
       "Uint8":    {fn:DataView.prototype.getUint8,    bytes:1},
       "Uint16":   {fn:DataView.prototype.getUint16,   bytes:2},
+      "Int32":    {fn:DataView.prototype.getInt32,   bytes:4},
       "Float32":  {fn:DataView.prototype.getFloat32,  bytes:4}
     };
     var packetPointer = 0,i = 0;
@@ -563,6 +590,53 @@ function updateOrientationGraph() {
   var gxCanvas = halfWidth - (gy * halfWidth);
   var gyCanvas = halfHeight - (gz * halfHeight);
   ctx.lineTo(gxCanvas, gyCanvas);
+  ctx.stroke();  
+}
+    
+function initStrokeGraph() {
+  var canvas = document.getElementById('stroke');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+    
+function updateStrokeGraph() {
+  var canvas = document.getElementById('stroke');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);  
+  
+  var strokeData = BLEsense['stroke'].data;
+  var strokeX = strokeData.x.latest();
+  var strokeY = strokeData.y.latest();
+  var strokeDataLength = BLEsense['strokeLength'].data.x.latest();
+  var strokeState = BLEsense['strokeState'].data.x.latest();
+  
+  var canvasWidth = canvas.width;
+  var canvasHeight = canvas.height;
+  var halfHeight = canvasHeight / 2;
+  var halfWidth = canvasWidth / 2;
+      
+  ctx.strokeStyle = "#ffffff";
+  ctx.beginPath();
+  for (var i = 0; i < strokeDataLength; ++i) {
+    var x = strokeX[i];
+    var y = strokeY[i];
+    
+    var xCanvas = halfWidth - (x * halfWidth);
+    var yCanvas = halfHeight - (y * halfHeight);
+    
+    if (i === 0) {
+      ctx.moveTo(xCanvas, yCanvas);
+    } else if (i == (dataLength - 1)) {
+      ctx.lineTo(xCanvas+5, yCanvas+5);
+      ctx.lineTo(xCanvas-5, yCanvas-5);
+      ctx.moveTo(xCanvas+5, yCanvas-5);
+      ctx.moveTo(xCanvas-5, yCanvas+5);      
+    } else {
+      ctx.lineTo(xCanvas, yCanvas);
+    }
+  }
   ctx.stroke();  
 }
    
