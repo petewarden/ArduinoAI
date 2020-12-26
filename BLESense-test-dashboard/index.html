@@ -670,8 +670,9 @@ Array.prototype.latest = function(){return this[this.length - 1];};
 //      updateVelocityGraph();
 //      updateGravityGraph();
 //      updatePositionGraph();
-      updateGyroscopeGraph();
+//      updateGyroscopeGraph();
       updateOrientationGraph();
+      updateStrokeGraph();
       
       skip_frame = true; // render alternate frames = 30fps
     } else {skip_frame=false;}
@@ -684,6 +685,7 @@ Array.prototype.latest = function(){return this[this.length - 1];};
   initPositionGraph();
   initGyroscopeGraph();
   initOrientationGraph();
+  initStrokeGraph();
     
   requestAnimationFrame(draw);
   </script>
