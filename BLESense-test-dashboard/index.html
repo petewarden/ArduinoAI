@@ -642,7 +642,7 @@ function updateStrokeGraph() {
     
     if (i === 0) {
       ctx.moveTo(xCanvas, yCanvas);
-    } else if (i == (dataLength - 1)) {
+    } else if (i == (strokeDataLength - 1)) {
       ctx.lineTo(xCanvas+5, yCanvas+5);
       ctx.lineTo(xCanvas-5, yCanvas-5);
       ctx.moveTo(xCanvas+5, yCanvas-5);
