@@ -559,55 +559,55 @@ function updateStrokeGraph() {
 
 var BLEsense =
 {
-//  accelerometer:
-//  {
-//    uuid: '6fbe1da7-3001-44de-92c4-bb6e04fb0212',
-//    properties: ['BLENotify'],
-//    structure: ['Float32','Float32','Float32'],
-//    data: {'Ax':[],'Ay':[],'Az':[]},
-//  },
-//  velocity:
-//  {
-//    uuid: '6fbe1da7-3005-44de-92c4-bb6e04fb0212',
-//    properties: ['BLENotify'],
-//    structure: ['Float32','Float32','Float32'],
-//    data: {'vx':[],'vy':[],'vz':[]},
-//  },
-//  position:
-//  {
-//    uuid: '6fbe1da7-3004-44de-92c4-bb6e04fb0212',
-//    properties: ['BLENotify'],
-//    structure: ['Float32','Float32','Float32'],
-//    data: {'x':[],'y':[],'z':[]},
-//  },
-//  gravity:
-//  {
-//    uuid: '6fbe1da7-3006-44de-92c4-bb6e04fb0212',
-//    properties: ['BLENotify'],
-//    structure: ['Float32','Float32','Float32'],
-//    data: {'x':[],'y':[],'z':[]},
-//  },
-//  gyroscope:
-//  {
-//    uuid: '6fbe1da7-3007-44de-92c4-bb6e04fb0212',
-//    properties: ['BLENotify'],
-//    structure: ['Float32','Float32','Float32'],
-//    data: {'x':[],'y':[],'z':[]},
-//  },
-//  orientation:
-//  {
-//    uuid: '6fbe1da7-3008-44de-92c4-bb6e04fb0212',
-//    properties: ['BLENotify'],
-//    structure: ['Float32','Float32','Float32'],
-//    data: {'x':[],'y':[],'z':[]},
-//  },
-//  gyroscopeDrift:
-//  {
-//    uuid: '6fbe1da7-3009-44de-92c4-bb6e04fb0212',
-//    properties: ['BLENotify'],
-//    structure: ['Float32','Float32','Float32'],
-//    data: {'x':[],'y':[],'z':[]},
-//  },
+  accelerometer:
+  {
+    uuid: '6fbe1da7-3001-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'Ax':[],'Ay':[],'Az':[]},
+  },
+  velocity:
+  {
+    uuid: '6fbe1da7-3005-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'vx':[],'vy':[],'vz':[]},
+  },
+  position:
+  {
+    uuid: '6fbe1da7-3004-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'x':[],'y':[],'z':[]},
+  },
+  gravity:
+  {
+    uuid: '6fbe1da7-3006-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'x':[],'y':[],'z':[]},
+  },
+  gyroscope:
+  {
+    uuid: '6fbe1da7-3007-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'x':[],'y':[],'z':[]},
+  },
+  orientation:
+  {
+    uuid: '6fbe1da7-3008-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'x':[],'y':[],'z':[]},
+  },
+  gyroscopeDrift:
+  {
+    uuid: '6fbe1da7-3009-44de-92c4-bb6e04fb0212',
+    properties: ['BLENotify'],
+    structure: ['Float32','Float32','Float32'],
+    data: {'x':[],'y':[],'z':[]},
+  },
   stroke:
   {
     uuid: '6fbe1da7-300a-44de-92c4-bb6e04fb0212',
@@ -687,8 +687,8 @@ Array.prototype.latest = function(){return this[this.length - 1];};
 //      updateGravityGraph();
 //      updatePositionGraph();
 //      updateGyroscopeGraph();
-//      updateOrientationGraph();
-      updateStrokeGraph();
+      updateOrientationGraph();
+//      updateStrokeGraph();
       
       skip_frame = true; // render alternate frames = 30fps
     } else {skip_frame=false;}
@@ -700,7 +700,7 @@ Array.prototype.latest = function(){return this[this.length - 1];};
 //  initGravityGraph();
 //  initPositionGraph();
 //  initGyroscopeGraph();
-//  initOrientationGraph();
+  initOrientationGraph();
   initStrokeGraph();
     
   requestAnimationFrame(draw);
