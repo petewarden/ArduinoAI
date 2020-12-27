@@ -520,18 +520,23 @@ function initStrokeGraph() {
 function updateStrokeGraph() {
   var canvas = document.getElementById('stroke');
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = "#111111";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);  
-  
+
   var strokeData = BLEsense['stroke'].data;
   var strokeDataLength = strokeData.length.latest();
   var strokeState = strokeData.state.latest();
+
+  if (strokeState !== 2) {
+    return;
+  }
   
   var canvasWidth = canvas.width;
   var canvasHeight = canvas.height;
   var halfHeight = canvasHeight / 2;
   var halfWidth = canvasWidth / 2;
-      
+
+  ctx.fillStyle = "#111111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);  
+          
   ctx.strokeStyle = "#ffffff";
   ctx.beginPath();
   for (var i = 0; i < strokeDataLength; ++i) {
